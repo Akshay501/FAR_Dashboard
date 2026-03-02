@@ -1,3 +1,32 @@
+# Sensitive files
+config.yml
+*.secret
+*.key
+*.pem
+*.env
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE / editor files
+.idea/
+.vscode/
+*.sublime-project
+
+# macOS junk
+.DS_Store
+
+# Logs & temp
+*.log
+temp/
+tmp/
+
+##############################################
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
