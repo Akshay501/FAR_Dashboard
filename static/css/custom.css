@@ -1,0 +1,158 @@
+/* ========================================
+   Clarkson University Brand Colors
+   ======================================== */
+
+:root {
+  /* Core – use dominantly */
+  --cu-green:      #004e42;
+  --cu-gold:       #ffcd00;
+  --cu-white:      #ffffff;
+
+  /* Bold secondary – vibrant, use sparingly */
+  --cu-bold-lime:  #7a9a01;
+  --cu-bold-orange:#cf4520;
+  --cu-bold-blue:  #418fde;
+  --cu-bold-navy:  #002d72;
+
+  /* Mature secondary – softer, professional */
+  --cu-mature-olive: #a2a569;
+  --cu-mature-rust:  #c6893f;
+  --cu-mature-lblue: #7bafd4;
+  --cu-mature-dblue: #005587;
+
+  /* Neutrals – tints for backgrounds/borders */
+  --cu-gray-1:     #d7d2cb;
+  --cu-gray-6:     #a59c94;
+  --cu-gray-11:    #6e6259;
+}
+
+/* ========================================
+   Global & Layout
+   ======================================== */
+
+body {
+  background-color: var(--cu-white);
+  color: var(--cu-green);
+}
+
+/* Navbar – green base, gold text */
+.navbar {
+  background-color: var(--cu-green) !important;
+}
+.navbar-brand {
+  color: var(--cu-gold) !important;
+}
+.navbar-text, .nav-link {
+  color: var(--cu-white) !important;
+}
+.nav-link:hover, .nav-link.active {
+  color: var(--cu-gold) !important;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--cu-gold);
+  border-color: var(--cu-gold);
+  color: var(--cu-green);
+  font-weight: 600;
+}
+.btn-primary:hover {
+  background-color: #e6b800; /* slightly darker gold */
+  border-color: #e6b800;
+  color: var(--cu-green);
+}
+.btn-outline-primary {
+  color: var(--cu-gold);
+  border-color: var(--cu-gold);
+}
+.btn-outline-primary:hover {
+  background-color: var(--cu-gold);
+  color: var(--cu-green);
+}
+
+/* Cards / Sections */
+.card {
+  border-color: var(--cu-gray-1);
+  background-color: var(--cu-white);
+}
+.card-header {
+  background-color: var(--cu-green);
+  color: var(--cu-gold);
+}
+
+/* Tables */
+.table thead th {
+  background-color: var(--cu-green);
+  color: var(--cu-gold);
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: rgba(0, 78, 66, 0.03); /* very light green tint */
+}
+
+/* Alerts / Flash messages */
+.alert-success {
+  background-color: var(--cu-bold-lime);
+  color: var(--cu-white);
+  border-color: #5e7a00;
+}
+.alert-danger {
+  background-color: var(--cu-bold-orange);
+  color: var(--cu-white);
+  border-color: #a53619;
+}
+.alert-info {
+  background-color: var(--cu-bold-blue);
+  color: var(--cu-white);
+}
+
+/* Forms */
+.form-control:focus {
+  border-color: var(--cu-gold);
+  box-shadow: 0 0 0 0.25rem rgba(255, 205, 0, 0.25);
+}
+.form-label {
+  color: var(--cu-green);
+  font-weight: 500;
+}
+
+/* Links & highlights */
+a {
+  color: var(--cu-gold);
+}
+a:hover {
+  color: #e6b800;
+}
+
+/* White space (brand guide emphasis) */
+.container {
+  padding: 2rem 1rem;
+}
+
+.text-gold {
+  color: #ffcd00 !important;
+}
+a.text-gold:hover {
+  color: #e6b800 !important;
+}
+
+/* Gold links with icon */
+.text-gold-link {
+  color: #ffcd00 !important;
+  text-decoration: none;
+}
+.text-gold-link:hover,
+.text-gold-link:focus {
+  color: #e6b800 !important;  /* slightly darker gold on hover */
+  text-decoration: underline;
+}
+
+/* Gold external link icon */
+.bi-box-arrow-up-right {
+  color: #ffcd00;
+  font-size: 0.9em;
+  vertical-align: middle;
+}
+
+.text-gold-link {
+  font-weight: 500;
+}

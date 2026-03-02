@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <h1 class="text-center mb-4" style="color: #004e42;">
+    Admin Dashboard
+  </h1>
+  <p class="lead text-center text-muted">
+    Overview of all faculty activity reports
+  </p>
+
+  <!-- Search & Filter Form -->
+  <div class="card shadow mb-4 border-0">
+    <div class="card-header text-center" style="background-color: #004e42; color: #ffcd00;">
+      <h5>Search / Filter Professors</h5>
+    </div>
+    <div class="card-body">
+      <form method="POST" class="row g-3 align-items-end">
+        <!-- Name -->
+        <div class="col-md-3">
+          <label for="search_name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="search_name" name="search_name"
+                 placeholder="e.g. Akshay Thugu" value="{{ search_name }}">
+        </div>
+
+        <!-- Department -->
+        <div class="col-md-3">
+          <label for="search_dept" class="form-label">Department</label>
+          <input type="text" class="form-control" id="search_dept" name="search_dept"
+                 placeholder="e.g. Computer Science" value="{{ search_dept }}">
+        </div>
+
+        <!-- Google ID -->
+        <div class="col-md-3">
+          <label for="search_googleid" class="form-label">Google ID</label>
+          <input type="text" class="form-control" id="search_googleid" name="search_googleid"
+                 placeholder="e.g. akshay.thugu" value="{{ search_googleid }}">
+        </div>
+
+        <!-- ORCID -->
+        <div class="col-md-3">
+          <label for="search_orcid" class="form-label">ORCID</label>
+          <input type="text" class="form-control" id="search_orcid" name="search_orcid"
+                 placeholder="e.g. 0000-0003-..." value="{{ search_orcid }}">
+        </div>
+
+        <!-- Buttons -->
+        <div class="col-12 d-flex gap-2 mt-3">
+          <button type="submit" class="btn flex-grow-1" style="background-color: #ffcd00; color: #004e42; font-weight: bold;">
+            Search
+          </button>
+          <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary flex-grow-1">
+            Clear Filters
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Professors Table -->
+  <div class="card shadow border-0">
+    <div class="card-header text-center" style="background-color: #004e42; color: #ffcd00;">
+      <h5>All Professors ({{ professors|length }} total) – Sorted by Employee ID</h5>
+    </div>
+
+    <div class="card-body p-0">
+      {% if professors %}
+        <div class="table-responsive">
+          <table class="table table-striped table-hover mb-0">
+            <thead>
+              <tr>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Google ID</th>
+                <th>ORCID</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for prof in professors %}
+              <tr>
+                <td>{{ prof['EmployeeID'] or 'N/A' }}</td>
+                <td>
+                  {{ prof['FirstName'] }} {{ prof['LastName'] }}
+                  {% if prof['MiddleName'] %}
+                    <small class="text-muted">({{ prof['MiddleName'] }})</small>
+                  {% endif %}
+                </td>
+                <td>{{ prof['Department'] or 'N/A' }}</td>
+
+                <!-- Google ID -->
+                <td data-bs-toggle="tooltip" data-bs-placement="top" 
+                    title="{{ prof['GoogleID'] or 'No Google Scholar ID available' }}">
+                  {% if prof['GoogleID'] %}
+                    <a href="https://scholar.google.com/citations?user={{ prof['GoogleID'] }}" 
+                       target="_blank" rel="noopener noreferrer"
+                       class="text-gold-link">
+                      {{ prof['GoogleID'] | truncate(12, true, '…') }}
+                      <i class="bi bi-box-arrow-up-right small ms-1"></i>
+                    </a>
+                  {% else %}
+                    N/A
+                  {% endif %}
+                </td>
+
+                <!-- ORCID -->
+                <td data-bs-toggle="tooltip" data-bs-placement="top" 
+                    title="{{ prof['ORCID'] or 'No ORCID available' }}">
+                  {% if prof['ORCID'] %}
+                    <a href="https://orcid.org/{{ prof['ORCID'] }}" 
+                       target="_blank" rel="noopener noreferrer"
+                       class="text-gold-link">
+                      {{ prof['ORCID'] | truncate(12, true, '…') }}
+                      <i class="bi bi-box-arrow-up-right small ms-1"></i>
+                    </a>
+                  {% else %}
+                    N/A
+                  {% endif %}
+                </td>
+
+                <td>
+                  <a href="{{ url_for('admin_view_professor', professor_key=prof['ProfessorKey']) }}"
+                     class="btn btn-sm btn-outline-primary">
+                    View Report
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="alert alert-info text-center m-3">
+          No professors match your search filters.
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap tooltips -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  });
+</script>
+{% endblock %}

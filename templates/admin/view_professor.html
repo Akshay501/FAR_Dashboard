@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <h1 class="text-center mb-4" style="color: #004e42;">
+    Professor Report: {{ professor['FirstName'] }} {{ professor['LastName'] }}
+  </h1>
+
+  <div class="card shadow border-0 mb-4">
+    <div class="card-header" style="background-color: #004e42; color: #ffcd00;">
+      <h5>Basic Information</h5>
+    </div>
+    <div class="card-body">
+      <dl class="row">
+        <dt class="col-sm-3">Employee ID</dt>
+        <dd class="col-sm-9">{{ professor['EmployeeID'] or 'N/A' }}</dd>
+
+        <dt class="col-sm-3">Full Name</dt>
+        <dd class="col-sm-9">
+          {{ professor['FirstName'] }} {{ professor['MiddleName'] or '' }} {{ professor['LastName'] }}
+        </dd>
+
+        <dt class="col-sm-3">Department</dt>
+        <dd class="col-sm-9">{{ professor['Department'] or 'N/A' }}</dd>
+
+        <dt class="col-sm-3">Google ID</dt>
+        <dd class="col-sm-9">
+          {% if professor['GoogleID'] %}
+            <a href="https://scholar.google.com/citations?user={{ professor['GoogleID'] }}" 
+               target="_blank" rel="noopener noreferrer" class="text-gold-link">
+              {{ professor['GoogleID'] }}
+              <i class="bi bi-box-arrow-up-right small ms-1"></i>
+            </a>
+          {% else %}
+            N/A
+          {% endif %}
+        </dd>
+
+        <dt class="col-sm-3">ORCID</dt>
+        <dd class="col-sm-9">
+          {% if professor['ORCID'] %}
+            <a href="https://orcid.org/{{ professor['ORCID'] }}" 
+               target="_blank" rel="noopener noreferrer" class="text-gold-link">
+              {{ professor['ORCID'] }}
+              <i class="bi bi-box-arrow-up-right small ms-1"></i>
+            </a>
+          {% else %}
+            N/A
+          {% endif %}
+        </dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Placeholder for future sections -->
+  <div class="alert alert-info">
+    Teaching Evaluations, Service, Grants, etc. will appear here later.
+  </div>
+
+  <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-primary mt-3">
+    Back to All Professors
+  </a>
+</div>
+{% endblock %}

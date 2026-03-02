@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Edit Teaching Evaluation</h1>
+<form method="POST">
+  <div class="mb-3">
+    <label for="Term" class="form-label">Term</label>
+    <input type="text" class="form-control" name="Term" value="{{ eval['Term'] }}">
+  </div>
+  <!-- Add other fields as needed -->
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
+{% endblock %}

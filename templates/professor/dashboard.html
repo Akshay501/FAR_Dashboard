@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <h1 class="text-center mb-4" style="color: #004e42;">
+      Welcome, {{ name }}!
+    </h1>
+    <p class="lead text-center">Your Faculty Activity Dashboard</p>
+    <p>Your ProfessorKey: {{ professor_key }}</p>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-6">
+    <div class="card shadow">
+      <div class="card-header" style="background-color: #004e42; color: #ffcd00;">
+        <h5>Teaching Evaluations</h5>
+      </div>
+      <div class="card-body">
+        <p>(Add table or list here later)</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card shadow">
+      <div class="card-header" style="background-color: #004e42; color: #ffcd00;">
+        <h5>Service Activities</h5>
+      </div>
+      <div class="card-body">
+        <p>(Add table or list here later)</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
