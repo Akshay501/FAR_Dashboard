@@ -1,35 +1,159 @@
 {% extends "base.html" %}
+
 {% block content %}
-<div class="row">
-  <div class="col-12">
-    <h1 class="text-center mb-4" style="color: #004e42;">
-      Welcome, {{ name }}!
-    </h1>
-    <p class="lead text-center">Your Faculty Activity Dashboard</p>
-    <p>Your ProfessorKey: {{ professor_key }}</p>
+<div class="container">
+  <h1 class="text-center mb-4" style="color: #004e42;">
+    Welcome, {{ name }}!
+  </h1>
+  <p class="lead text-center text-muted">
+    Your Faculty Activity Dashboard
+  </p>
+
+  <!-- Tabs for sections -->
+  <ul class="nav nav-tabs mb-4" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="teaching-tab" data-bs-toggle="tab" data-bs-target="#teaching" type="button" role="tab" aria-controls="teaching" aria-selected="true">
+        Teaching
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="service-tab" data-bs-toggle="tab" data-bs-target="#service" type="button" role="tab" aria-controls="service" aria-selected="false">
+        Service
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="grants-tab" data-bs-toggle="tab" data-bs-target="#grants" type="button" role="tab" aria-controls="grants" aria-selected="false">
+        Grants
+      </button>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <!-- Teaching Tab -->
+    <div class="tab-pane fade show active" id="teaching" role="tabpanel" aria-labelledby="teaching-tab">
+      <div class="card shadow border-0">
+        <div class="card-header" style="background-color: #004e42; color: #ffcd00;">
+          <h5>Teaching Evaluations</h5>
+        </div>
+        <div class="card-body p-0">
+          {% if evals %}
+            <div class="table-responsive">
+              <table class="table table-striped table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th>Term</th>
+                    <th>Course Title</th>
+                    <th>Calculated Mean</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for eval in evals %}
+                  <tr>
+                    <td>{{ eval['Term'] or 'N/A' }}</td>
+                    <td>{{ eval['Course Title'] or 'N/A' }}</td>
+                    <td>{{ eval['Calculated Mean'] or 'N/A' }}</td>
+                    <td>
+                      <a href="#" class="btn btn-sm btn-outline-primary">Edit</a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <p class="text-center text-muted mt-3">No teaching evaluations found.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Service Tab -->
+    <div class="tab-pane fade" id="service" role="tabpanel" aria-labelledby="service-tab">
+      <div class="card shadow border-0">
+        <div class="card-header" style="background-color: #004e42; color: #ffcd00;">
+          <h5>Service Activities</h5>
+        </div>
+        <div class="card-body p-0">
+          {% if services %}
+            <div class="table-responsive">
+              <table class="table table-striped table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Term</th>
+                    <th>Position</th>
+                    <th>Hours/Semester</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for srv in services %}
+                  <tr>
+                    <td>{{ srv['Type'] or 'N/A' }}</td>
+                    <td>{{ srv['Term'] or 'N/A' }}</td>
+                    <td>{{ srv['Position'] or 'N/A' }}</td>
+                    <td>{{ srv['Hours/Semester'] or 'N/A' }}</td>
+                    <td>
+                      <a href="#" class="btn btn-sm btn-outline-primary">Edit</a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <p class="text-center text-muted mt-3">No service activities found.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Grants Tab -->
+    <div class="tab-pane fade" id="grants" role="tabpanel" aria-labelledby="grants-tab">
+      <div class="card shadow border-0">
+        <div class="card-header" style="background-color: #004e42; color: #ffcd00;">
+          <h5>Grants</h5>
+        </div>
+        <div class="card-body p-0">
+          {% if grants_list %}
+            <div class="table-responsive">
+              <table class="table table-striped table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Begin Date</th>
+                    <th>End Date</th>
+                    <th>Allocated Amount</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for gr in grants_list %}
+                  <tr>
+                    <td>{{ gr['Title'] or 'N/A' }}</td>
+                    <td>{{ gr['Begin Date'] or 'N/A' }}</td>
+                    <td>{{ gr['End Date'] or 'N/A' }}</td>
+                    <td>{{ gr['Allocated Amount'] or 'N/A' }}</td>
+                    <td>
+                      <a href="#" class="btn btn-sm btn-outline-primary">Edit</a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <p class="text-center text-muted mt-3">No grants found.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="row mt-4">
-  <div class="col-md-6">
-    <div class="card shadow">
-      <div class="card-header" style="background-color: #004e42; color: #ffcd00;">
-        <h5>Teaching Evaluations</h5>
-      </div>
-      <div class="card-body">
-        <p>(Add table or list here later)</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <div class="card shadow">
-      <div class="card-header" style="background-color: #004e42; color: #ffcd00;">
-        <h5>Service Activities</h5>
-      </div>
-      <div class="card-body">
-        <p>(Add table or list here later)</p>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- Bootstrap tab script (if not in base.html) -->
+<script>
+  var tabTrigger = new bootstrap.Tab(document.getElementById('teaching-tab'));
+</script>
 {% endblock %}

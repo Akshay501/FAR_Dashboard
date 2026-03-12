@@ -2,6 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from models.user import user
 from models.professor import professor
+from models.teachingevaluation import teachingevaluation
+from models.service import service
+from models.grants import grants
 import os
 
 app = Flask(__name__)
@@ -74,9 +77,27 @@ def professor_dashboard():
     if current_user.role != 'professor':
         return redirect(url_for('login'))
 
+    # Fetch teaching evaluations
+    te = teachingevaluation()
+    te.getByProfessor(current_user.professor_key)
+    evals = te.data
+
+    # Fetch service activities
+    srv = service()
+    srv.getByProfessor(current_user.professor_key)
+    services = srv.data
+
+    # Fetch grants
+    gr = grants()
+    gr.getByProfessor(current_user.professor_key)
+    grants_list = gr.data
+
     return render_template('professor/dashboard.html',
                            name=current_user.name,
-                           professor_key=current_user.professor_key)
+                           professor_key=current_user.professor_key,
+                           evals=evals,
+                           services=services,
+                           grants_list=grants_list)
 
 @app.route('/admin/dashboard', methods=['GET', 'POST'])
 @login_required
