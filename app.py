@@ -26,6 +26,16 @@ def load_user(user_id):
     usr.name = u.data[0]['Name']
     return usr
 
+@app.route('/home')
+@app.route('/')
+def home():
+    if current_user.is_authenticated:
+        if current_user.role == 'admin':
+            return redirect(url_for('admin_dashboard'))
+        elif current_user.role == 'professor':
+            return redirect(url_for('professor_dashboard'))
+    return redirect(url_for('login'))
+
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
 def login():
