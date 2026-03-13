@@ -32,31 +32,46 @@ class baseObject:
 
     def getFields(self):
         self.fields = []
-        self.cur.execute(f"DESCRIBE `{self.tn}`")
+        sql = f"DESC `{self.tn}`"
+        self.cur.execute(sql)
         for row in self.cur:
-            if 'auto_increment' in row.get('Extra', ''):
+            self.fields.append(row['Field'])
+            if row['Key'] == 'PRI':
                 self.pk = row['Field']
-            else:
-                self.fields.append(row['Field'])
 
     def set(self, d):
         self.data = [d]
 
-    def insert(self, n=0):
-        if not self.data or len(self.data) <= n:
-            self.errors.append("No data to insert")
+    def insert(self):
+        if not self.data or len(self.data) == 0:
             return False
+        d = self.data[0]
+        fields = []
+        values = []
+        for field in self.fields:
+            if field != self.pk and field in d:
+                fields.append(f"`{field}`")
+                values.append(d[field])
+        sql = f"INSERT INTO `{self.tn}` ({', '.join(fields)}) VALUES ({'%s, ' * (len(values)-1)}%s)"
+        self.cur.execute(sql, values)
+        return self.cur.lastrowid
 
-        record = self.data[n]
-        keys = [k for k in record if k in self.fields]
-        cols = ', '.join(f'`{k}`' for k in keys)
-        ph = ', '.join(['%s'] * len(keys))
-        sql = f"INSERT INTO `{self.tn}` ({cols}) VALUES ({ph})"
-        vals = [record[k] for k in keys]
-
-        self.cur.execute(sql, vals)
-        if self.pk:
-            self.data[n][self.pk] = self.cur.lastrowid
+    def update(self):
+        if not self.data or len(self.data) == 0:
+            return False
+        d = self.data[0]
+        sets = []
+        values = []
+        for field in self.fields:
+            if field != self.pk and field in d:
+                sets.append(f"`{field}` = %s")
+                values.append(d[field])
+        if not d.get(self.pk):
+            return False
+        sql = f"UPDATE `{self.tn}` SET {', '.join(sets)} WHERE `{self.pk}` = %s"
+        values.append(d[self.pk])
+        self.cur.execute(sql, values)
+        return True
 
     def getAll(self, order=''):
         self.data = []
@@ -68,6 +83,8 @@ class baseObject:
 
     def getById(self, id_val):
         self.data = []
+        if not self.pk:
+            return
         sql = f"SELECT * FROM `{self.tn}` WHERE `{self.pk}` = %s"
         self.cur.execute(sql, (id_val,))
         row = self.cur.fetchone()
@@ -101,7 +118,3 @@ class baseObject:
 if __name__ == '__main__':
     test = baseObject()
     test.debug_print()
-
-
-
-    

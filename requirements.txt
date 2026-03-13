@@ -3,3 +3,5 @@ Flask-Login==0.6.3
 pymysql==1.1.1
 PyYAML==6.0.2
 Werkzeug==3.0.4
+fpdf==1.7.2  
+bibtexparser==1.4.1  

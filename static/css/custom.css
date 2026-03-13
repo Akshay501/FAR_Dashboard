@@ -31,78 +31,63 @@
    ======================================== */
 
 body {
+  font-family: 'Arial', sans-serif;
   background-color: var(--cu-white);
-  color: var(--cu-green);
+  color: var(--cu-gray-11);
 }
 
-/* Navbar – green base, gold text */
 .navbar {
   background-color: var(--cu-green) !important;
 }
+
 .navbar-brand {
   color: var(--cu-gold) !important;
-}
-.navbar-text, .nav-link {
-  color: var(--cu-white) !important;
-}
-.nav-link:hover, .nav-link.active {
-  color: var(--cu-gold) !important;
+  font-weight: bold;
 }
 
-/* Buttons */
 .btn-primary {
   background-color: var(--cu-gold);
   border-color: var(--cu-gold);
   color: var(--cu-green);
-  font-weight: 600;
 }
+
 .btn-primary:hover {
-  background-color: #e6b800; /* slightly darker gold */
+  background-color: #e6b800;
   border-color: #e6b800;
-  color: var(--cu-green);
 }
+
 .btn-outline-primary {
   color: var(--cu-gold);
   border-color: var(--cu-gold);
 }
+
 .btn-outline-primary:hover {
   background-color: var(--cu-gold);
   color: var(--cu-green);
 }
 
-/* Cards / Sections */
-.card {
-  border-color: var(--cu-gray-1);
-  background-color: var(--cu-white);
-}
 .card-header {
   background-color: var(--cu-green);
   color: var(--cu-gold);
 }
 
-/* Tables */
-.table thead th {
-  background-color: var(--cu-green);
-  color: var(--cu-gold);
-}
-.table-striped > tbody > tr:nth-of-type(odd) {
-  background-color: rgba(0, 78, 66, 0.03); /* very light green tint */
+.alert-success {
+  background-color: var(--cu-mature-olive);
+  border-color: var(--cu-bold-lime);
 }
 
-/* Alerts / Flash messages */
-.alert-success {
-  background-color: var(--cu-bold-lime);
-  color: var(--cu-white);
-  border-color: #5e7a00;
-}
 .alert-danger {
-  background-color: var(--cu-bold-orange);
-  color: var(--cu-white);
-  border-color: #a53619;
+  background-color: var(--cu-mature-rust);
+  border-color: var(--cu-bold-orange);
 }
-.alert-info {
-  background-color: var(--cu-bold-blue);
-  color: var(--cu-white);
+
+.table thead th {
+  background-color: var(--cu-gray-1);
+  color: var(--cu-green);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 78, 66, 0.05);  /* Light green tint */
 }
 
 /* Forms */

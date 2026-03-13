@@ -27,7 +27,7 @@
         <div class="col-md-3">
           <label for="search_dept" class="form-label">Department</label>
           <input type="text" class="form-control" id="search_dept" name="search_dept"
-                 placeholder="e.g. Computer Science" value="{{ search_dept }}">
+                 placeholder="e.g. Electrical" value="{{ search_dept }}">
         </div>
 
         <!-- Google ID -->
@@ -44,14 +44,10 @@
                  placeholder="e.g. 0000-0003-..." value="{{ search_orcid }}">
         </div>
 
-        <!-- Buttons -->
-        <div class="col-12 d-flex gap-2 mt-3">
-          <button type="submit" class="btn flex-grow-1" style="background-color: #ffcd00; color: #004e42; font-weight: bold;">
+        <div class="col-12 text-center">
+          <button type="submit" class="btn btn-primary px-5">
             Search
           </button>
-          <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary flex-grow-1">
-            Clear Filters
-          </a>
         </div>
       </form>
     </div>
@@ -60,19 +56,17 @@
   <!-- Professors Table -->
   <div class="card shadow border-0">
     <div class="card-header text-center" style="background-color: #004e42; color: #ffcd00;">
-      <h5>All Professors ({{ professors|length }} total) – Sorted by Employee ID</h5>
+      <h5>Faculty List</h5>
     </div>
-
     <div class="card-body p-0">
       {% if professors %}
         <div class="table-responsive">
           <table class="table table-striped table-hover mb-0">
             <thead>
               <tr>
-                <th>Employee ID</th>
                 <th>Name</th>
                 <th>Department</th>
-                <th>Google ID</th>
+                <th>Google Scholar</th>
                 <th>ORCID</th>
                 <th>Actions</th>
               </tr>
@@ -80,45 +74,30 @@
             <tbody>
               {% for prof in professors %}
               <tr>
-                <td>{{ prof['EmployeeID'] or 'N/A' }}</td>
-                <td>
-                  {{ prof['FirstName'] }} {{ prof['LastName'] }}
-                  {% if prof['MiddleName'] %}
-                    <small class="text-muted">({{ prof['MiddleName'] }})</small>
-                  {% endif %}
-                </td>
+                <td>{{ prof['FirstName'] }} {{ prof['LastName'] }}</td>
                 <td>{{ prof['Department'] or 'N/A' }}</td>
-
-                <!-- Google ID -->
-                <td data-bs-toggle="tooltip" data-bs-placement="top" 
-                    title="{{ prof['GoogleID'] or 'No Google Scholar ID available' }}">
+                <td>
                   {% if prof['GoogleID'] %}
                     <a href="https://scholar.google.com/citations?user={{ prof['GoogleID'] }}" 
-                       target="_blank" rel="noopener noreferrer"
-                       class="text-gold-link">
-                      {{ prof['GoogleID'] | truncate(12, true, '…') }}
+                       target="_blank" rel="noopener noreferrer" class="text-gold-link">
+                      {{ prof['GoogleID'] }}
                       <i class="bi bi-box-arrow-up-right small ms-1"></i>
                     </a>
                   {% else %}
                     N/A
                   {% endif %}
                 </td>
-
-                <!-- ORCID -->
-                <td data-bs-toggle="tooltip" data-bs-placement="top" 
-                    title="{{ prof['ORCID'] or 'No ORCID available' }}">
+                <td>
                   {% if prof['ORCID'] %}
                     <a href="https://orcid.org/{{ prof['ORCID'] }}" 
-                       target="_blank" rel="noopener noreferrer"
-                       class="text-gold-link">
-                      {{ prof['ORCID'] | truncate(12, true, '…') }}
+                       target="_blank" rel="noopener noreferrer" class="text-gold-link">
+                      {{ prof['ORCID'] }}
                       <i class="bi bi-box-arrow-up-right small ms-1"></i>
                     </a>
                   {% else %}
                     N/A
                   {% endif %}
                 </td>
-
                 <td>
                   <a href="{{ url_for('admin_view_professor', professor_key=prof['ProfessorKey']) }}"
                      class="btn btn-sm btn-outline-primary">
