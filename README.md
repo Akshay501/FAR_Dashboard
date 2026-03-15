@@ -1,7 +1,7 @@
 
 # Faculty Activity Report (FAR) Web App
 
-![FAR Dashboard]('/Users/akshaythugudam/Documents/GitHub/FAR/FAR_Dashboard/static/images/Screenshot 2026-03-13 at 8.07.15 PM.png')  
+![FAR Dashboard]('/Users/akshaythugudam/Documents/GitHub/FAR/FAR_Dashboard/static/images/FAR_Loginpage.png')  
 
 A data-driven web application for professors to view, update, and export their Faculty Activity Reports. Built with Flask, MySQL, and Bootstrap, featuring login, dashboards, BibTeX imports for publications, and PDF generation.
 
